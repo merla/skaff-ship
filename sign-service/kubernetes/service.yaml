@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sign-service
+  labels:
+    app: sign-service
+spec:
+  clusterIP: None
+  ports:
+    - port: 8440
+      name: sign-service
+  selector:
+    app: sign-service

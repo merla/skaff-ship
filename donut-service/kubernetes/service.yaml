@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: donut-service
+  labels:
+    app: donut-service
+spec:
+  clusterIP: None
+  ports:
+    - port: 8441
+      name: donut-service
+  selector:
+    app: donut-service

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ship-service
+  labels:
+    app: ship-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ship-service
+  template:
+    metadata:
+      labels:
+        app: ship-service
+    spec:
+      containers:
+      - name: ship-service
+        image: gcr.io/kube-gke-terra/ship-service
+        ports:
+        - containerPort: 8442

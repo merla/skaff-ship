@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sign-service
+  labels:
+    app: sign-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sign-service
+  template:
+    metadata:
+      labels:
+        app: sign-service
+    spec:
+      containers:
+      - name: sign-service
+        image: gcr.io/kube-gke-terra/sign-service
+        ports:
+        - containerPort: 8440

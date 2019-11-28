@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: donut-service
+  labels:
+    app: donut-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: donut-service
+  template:
+    metadata:
+      labels:
+        app: donut-service
+    spec:
+      containers:
+      - name: donut-service
+        image: gcr.io/kube-gke-terra/donut-service
+        ports:
+        - containerPort: 8441

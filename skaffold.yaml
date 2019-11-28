@@ -1,0 +1,18 @@
+apiVersion: skaffold/v1
+kind: Config
+build:
+  artifacts:
+    - image: gcr.io/kube-gke-terra/donut-service
+      context: ./donut-service/
+    - image: gcr.io/kube-gke-terra/ship-service
+      context: ./ship-service/
+deploy:
+  kubectl:
+    manifests:
+      - ./donut-service/kubernetes/*
+      - ./ship-service/kubernetes/*
+portForward:
+  - resourceType: deployment
+    resourceName: ship-service
+    port: 8442
+    localPort: 8442
