@@ -8,11 +8,10 @@ test-donut:
 build-and-push-donut:
   stage: build
   image: docker:latest
-  variables:
-    APP_VERSION: "$(cat helm/charts/donut-service/Chart.yaml | grep appVersion | awk -F': ' '{print $2}')"
   services:
     - docker:dind
   before_script:
+    - export APP_VERSION=$(cat helm/charts/donut-service/Chart.yaml | grep appVersion | awk -F' ' '{print $2}')
     - echo ${GCLOUD_SERVICE_KEY} | base64 -d > ${HOME}/gcloud-service-key.json
     - docker login -u _json_key -p "$(cat ${HOME}/gcloud-service-key.json)" https://gcr.io
   script:
