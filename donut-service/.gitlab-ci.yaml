@@ -6,7 +6,7 @@ test-donut:
     - echo test
 
 build-and-push-donut:
-  stage: build-and-push
+  stage: build
   image: docker:latest
   variables:
     APP_VERSION: "$(cat helm/charts/donut-service/Chart.yaml | grep appVersion | awk -F': ' '{print $2}')"
