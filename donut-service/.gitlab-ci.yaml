@@ -13,8 +13,9 @@ build-and-push-donut:
   services:
     - docker:dind
   before_script:
-    - echo ${GCLOUD_SERVICE_KEY} | base64 -d > ~/gcloud-service-key.json
-    - docker login -u _json_key -p "$(cat ~/gcloud-service-key.json) https://gcr.io"
+    - touch home/gcloud-service-key.json
+    - echo ${GCLOUD_SERVICE_KEY} | base64 -d > ${HOME}/gcloud-service-key.json
+    - docker login -u _json_key -p "$(cat ${HOME}/gcloud-service-key.json) https://gcr.io"
   script:
     - docker build . -t gcr.io/kube-gke-terra/donut-service:${APP_VERSION}
     - docker push gcr.io/kube-gke-terra/donut-service:${APP_VERSION}
