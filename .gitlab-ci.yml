@@ -1,7 +1,7 @@
 ---
 
 stages:
-  - test
+  # - test
   - build-and-push
 
 include:

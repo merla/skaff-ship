@@ -1,16 +1,16 @@
-test-donut:
-  stage: test
-  image: golang:1.13-alpine3.10
-  script:
-    - cd donut-service
-    - echo test
+# test-donut:
+#   stage: test
+#   image: golang:1.13-alpine3.10
+#   script:
+#     - cd donut-service
+#     - echo test
 
 build-and-push-donut:
   stage: build-and-push
   image: docker:latest
   services:
     - docker:dind
-    - punkupoz:cloud-utils
+    - punkupoz/cloud-utils:v1.2.0
   before_script:
     - skaffold version
   script:
