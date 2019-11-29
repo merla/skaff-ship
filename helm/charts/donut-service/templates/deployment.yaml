@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: donut-service
-        image: gcr.io/kube-gke-terra/donut-service
+        image: {{ .Values.image }}
         ports:
         - containerPort: 8441

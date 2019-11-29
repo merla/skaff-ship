@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: ship-service
-        image: gcr.io/kube-gke-terra/ship-service
+        image: {{ .Values.image }}
         ports:
         - containerPort: 8442

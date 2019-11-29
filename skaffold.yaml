@@ -1,16 +1,27 @@
 apiVersion: skaffold/v1
 kind: Config
 build:
+  tagPolicy:
+    sha256: {}
   artifacts:
     - image: gcr.io/kube-gke-terra/donut-service
       context: ./donut-service/
     - image: gcr.io/kube-gke-terra/ship-service
       context: ./ship-service/
 deploy:
-  kubectl:
-    manifests:
-      - ./donut-service/kubernetes/*
-      - ./ship-service/kubernetes/*
+  helm:
+    releases:
+    - name: donut-service
+      chartPath: ./helm/charts/donut-service
+      values:
+        image: gcr.io/kube-gke-terra/donut-service
+    - name: ship-service
+      chartPath: ./helm/charts/ship-service
+      values:
+        image: gcr.io/kube-gke-terra/ship-service
+    flags:
+      upgrade:
+        - "--install"
 portForward:
   - resourceType: deployment
     resourceName: ship-service
