@@ -1,19 +1,20 @@
-# test-donut:
-#   stage: test
-#   image: golang:1.13-alpine3.10
-#   script:
-#     - cd donut-service
-#     - echo test
+test-donut:
+  stage: test
+  image: golang:1.13-alpine3.10
+  script:
+    - cd donut-service
+    - echo test
 
 build-and-push-donut:
   stage: build-and-push
   image: docker:latest
+  variables:
+    APP_VERSION: "$(cat helm/charts/donut-service/Chart.yaml | grep appVersion | awk -F': ' '{print $2}')"
   services:
     - docker:dind
-    - punkupoz/cloud-utils:latest
   before_script:
-    - skaffold version
+    - echo ${GCLOUD_SERVICE_KEY} | base64 -d > ~/gcloud-service-key.json
+    - docker login -u _json_key -p "$(cat ~/gcloud-service-key.json) https://gcr.io"
   script:
-    - echo script
-  
-  
+    - docker build . -t gcr.io/kube-gke-terra/donut-service:${APP_VERSION}
+    - docker push gcr.io/kube-gke-terra/donut-service:${APP_VERSION}
