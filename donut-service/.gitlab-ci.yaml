@@ -10,7 +10,7 @@ build-and-push-donut:
   image: docker:latest
   services:
     - docker:dind
-    - punkupoz/cloud-utils:v1.2.0
+    - punkupoz/cloud-utils:latest
   before_script:
     - skaffold version
   script:
