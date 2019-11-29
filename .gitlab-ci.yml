@@ -1,0 +1,8 @@
+---
+
+stages:
+  - test
+  - build-and-push
+
+include:
+  - '/donut-service/.gitlab-ci.yaml'
