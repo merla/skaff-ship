@@ -36,7 +36,7 @@ deploy-donut:
     - gcloud config set project ${GCP_PROJECT_ID}
     - gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${GCP_PROJECT_ID}
   script:
-    - helm install donut-service ./helm/charts/donut-service 
+    - helm install donut-service-prod ./helm/charts/donut-service 
       --set imageProd=gcr.io/kube-gke-terra/donut-service:${APP_VERSION} 
       --set env_codename=prod
   # only:
