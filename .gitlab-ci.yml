@@ -3,6 +3,7 @@
 stages:
   - test
   - build
+  - deploy
 
 include:
   - '/donut-service/.gitlab-ci.yaml'
