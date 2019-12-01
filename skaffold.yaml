@@ -15,10 +15,14 @@ deploy:
       chartPath: ./helm/charts/donut-service
       values:
         image: gcr.io/kube-gke-terra/donut-service
+      setValues:
+        env_codename: dev
     - name: ship-service
       chartPath: ./helm/charts/ship-service
       values:
         image: gcr.io/kube-gke-terra/ship-service
+      setValues:
+        env_codename: dev
     flags:
       upgrade:
         - "--install"

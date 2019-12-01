@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: ship-service
-        image: {{ .Values.image }}
+        image: {{ if .Values.imageProd }}{{ .Values.imageProd }}{{ else }}{{ .Values.image }}{{ end }}
         ports:
         - containerPort: 8442
