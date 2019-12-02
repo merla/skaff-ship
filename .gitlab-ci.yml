@@ -6,19 +6,34 @@ stages:
   - build
   - deploy
 
-test donut:
+test donut-service:
   variables:
     SERVICE_NAME: donut-service
   extends: .test-go
 
-build-and-push donut:
+build-and-push donut-service:
   variables:
     SERVICE_NAME: donut-service
   extends: .build-and-push
 
-deploy donut:
+deploy donut-service:
   variables:
     SERVICE_NAME: donut-service
+  extends: .deploy
+
+test ship-service:
+  variables:
+    SERVICE_NAME: ship-service
+  extends: .test-go
+
+build-and-push ship-service:
+  variables:
+    SERVICE_NAME: ship-service
+  extends: .build-and-push
+
+deploy ship-service:
+  variables:
+    SERVICE_NAME: ship-service
   extends: .deploy
 
 .test-go:
@@ -27,9 +42,9 @@ deploy donut:
   script:
     - cd $SERVICE_NAME
     - echo test
-  # only:
-  #   changes:
-  #     - $SERVICE_NAME/**/*
+  only:
+    changes:
+      - $SERVICE_NAME/**/*
 
 .build-and-push:
   stage: build
@@ -48,6 +63,8 @@ deploy donut:
     changes:
       - $SERVICE_NAME/**/*
       - helm/charts/$SERVICE_NAME/**/*
+  needs:
+    - test $SERVICE_NAME
 
 .deploy:
   stage: deploy
@@ -65,3 +82,5 @@ deploy donut:
   only:
     changes:
       - helm/charts/$SERVICE_NAME/**/*
+  needs:
+    - build-and-push $SERVICE_NAME
