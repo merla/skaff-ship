@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: donut-service
+  name: donut-service-{{ .Values.env_codename}}
   labels:
-    app: donut-service
+    app: donut-service-{{ .Values.env_codename}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: donut-service
+      app: donut-service-{{ .Values.env_codename}}
   template:
     metadata:
       labels:
-        app: donut-service
+        app: donut-service-{{ .Values.env_codename}}
     spec:
       containers:
-      - name: donut-service
-        image: {{ .Values.image }}
+      - name: donut-service-{{ .Values.env_codename}}
+        image: {{ if .Values.imageProd }}{{ .Values.imageProd }}{{ else }}{{ .Values.image }}{{ end }}
         ports:
         - containerPort: 8441

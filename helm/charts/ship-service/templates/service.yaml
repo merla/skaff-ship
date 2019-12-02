@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ship-service
+  name: ship-service-{{ .Values.env_codename}}
   labels:
-    app: ship-service
+    app: ship-service-{{ .Values.env_codename}}
 spec:
-  clusterIP: None
   ports:
     - port: 8442
-      name: ship-service
+      name: ship-service-{{ .Values.env_codename}}
   selector:
-    app: ship-service
+    app: ship-service-{{ .Values.env_codename}}
