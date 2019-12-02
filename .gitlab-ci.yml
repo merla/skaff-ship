@@ -20,16 +20,16 @@ deploy donut:
   variables:
     SERVICE_NAME: donut-service
   extends: .deploy
-  
+
 .test-go:
   stage: test
   image: golang:1.13-alpine3.10
   script:
     - cd $SERVICE_NAME
     - echo test
-  only:
-    changes:
-      - $SERVICE_NAME/**/*
+  # only:
+  #   changes:
+  #     - $SERVICE_NAME/**/*
 
 .build-and-push:
   stage: build
