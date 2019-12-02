@@ -6,35 +6,67 @@ stages:
   - build
   - deploy
 
+# DONUT SERVICE
+
 test donut-service:
   variables:
     SERVICE_NAME: donut-service
   extends: .test-go
+  only:
+    changes:
+      - donut-service/**/*
+      - .gitlab-ci.yml
 
 build-and-push donut-service:
   variables:
     SERVICE_NAME: donut-service
   extends: .build-and-push
+  only:
+    changes:
+      - donut-service/**/*
+      - helm/charts/donut-service/**/*
+      - .gitlab-ci.yml
 
 deploy donut-service:
   variables:
     SERVICE_NAME: donut-service
   extends: .deploy
+  only:
+    changes:
+      - helm/charts/donut-service/**/*
+      - .gitlab-ci.yml
+
+# SHIP SERVICE
 
 test ship-service:
   variables:
     SERVICE_NAME: ship-service
   extends: .test-go
+  only:
+    changes:
+      - ship-service/**/*
+      - .gitlab-ci.yml
 
 build-and-push ship-service:
   variables:
     SERVICE_NAME: ship-service
   extends: .build-and-push
+  only:
+    changes:
+      - ship-service/**/*
+      - helm/charts/ship-service/**/*
+      - .gitlab-ci.yml
 
 deploy ship-service:
   variables:
     SERVICE_NAME: ship-service
   extends: .deploy
+  only:
+    changes:
+      - helm/charts/ship-service/**/*
+      - .gitlab-ci.yml
+
+# PIPELINE LOGICS
 
 .test-go:
   stage: test
@@ -42,9 +74,7 @@ deploy ship-service:
   script:
     - cd $SERVICE_NAME
     - echo test
-  only:
-    changes:
-      - $SERVICE_NAME/**/*
+  
 
 .build-and-push:
   stage: build
@@ -59,10 +89,6 @@ deploy ship-service:
     - cd $SERVICE_NAME
     - docker build . -t gcr.io/kube-gke-terra/$SERVICE_NAME:${APP_VERSION}-${CI_COMMIT_SHORT_SHA}
     - docker push gcr.io/kube-gke-terra/$SERVICE_NAME:${APP_VERSION}-${CI_COMMIT_SHORT_SHA}
-  only:
-    changes:
-      - $SERVICE_NAME/**/*
-      - helm/charts/$SERVICE_NAME/**/*
 
 .deploy:
   stage: deploy
@@ -77,6 +103,3 @@ deploy ship-service:
     - helm upgrade $SERVICE_NAME-prod --install ./helm/charts/$SERVICE_NAME 
       --set imageProd=gcr.io/kube-gke-terra/$SERVICE_NAME:${APP_VERSION}-${CI_COMMIT_SHORT_SHA}
       --set env_codename=prod
-  only:
-    changes:
-      - helm/charts/$SERVICE_NAME/**/*
