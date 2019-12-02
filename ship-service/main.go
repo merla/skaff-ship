@@ -27,7 +27,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	log.Print("Shipper is ready")
+	log.Print("Shipper is ready 1")
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8442", nil)
 }

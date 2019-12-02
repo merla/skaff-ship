@@ -64,3 +64,18 @@ deploy donut:
   variables:
     SERVICE_NAME: donut-service
   <<: *deploy
+
+test ship:
+  variables:
+    SERVICE_NAME: ship-service
+  <<: *test-go
+
+build-and-push ship:
+  variables:
+    SERVICE_NAME: ship-service
+  <<: *build-and-push
+
+deploy ship:
+  variables:
+    SERVICE_NAME: ship-service
+  <<: *deploy
