@@ -23,7 +23,6 @@ build-and-push-donut:
     - docker push gcr.io/kube-gke-terra/donut-service:${APP_VERSION}
   only:
     changes:
-      - dounut-service/**/*
       - helm/charts/donut-service/**/*
 
 deploy-donut:
@@ -39,7 +38,6 @@ deploy-donut:
     - helm upgrade donut-service-prod --install ./helm/charts/donut-service 
       --set imageProd=gcr.io/kube-gke-terra/donut-service:${APP_VERSION} 
       --set env_codename=prod
-  # only:
-  #   changes:
-  #     - dounut-service/**/*
-  #     - helm/charts/donut-service/**/*
+  only:
+    changes:
+      - helm/charts/donut-service/**/*
