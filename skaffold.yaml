@@ -11,13 +11,13 @@ build:
 deploy:
   helm:
     releases:
-    - name: donut-service
+    - name: donut-service-dev
       chartPath: ./helm/charts/donut-service
       values:
         image: gcr.io/kube-gke-terra/donut-service
       setValues:
         env_codename: dev
-    - name: ship-service
+    - name: ship-service-dev
       chartPath: ./helm/charts/ship-service
       values:
         image: gcr.io/kube-gke-terra/ship-service

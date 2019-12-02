@@ -16,7 +16,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	donut, err := request("http://donut-service:8441", bytes.NewReader(signed))
+	donut, err := request("http://donut-service-prod:8441", bytes.NewReader(signed))
 	if err != nil {
 		panic(err)
 	}

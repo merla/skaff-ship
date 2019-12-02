@@ -5,7 +5,6 @@ metadata:
   labels:
     app: donut-service-{{ .Values.env_codename}}
 spec:
-  clusterIP: None
   ports:
     - port: 8441
       name: donut-service-{{ .Values.env_codename}}
