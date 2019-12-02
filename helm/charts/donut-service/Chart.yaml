@@ -1,4 +1,4 @@
 apiVersion: v1
 name: donut-service-{{ .Values.env_codename}}
 version: 1.26.1
-appVersion: 1.0.0-dirt2
+appVersion: 1.0.1

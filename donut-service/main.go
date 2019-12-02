@@ -24,7 +24,7 @@ func handleMakeDonut(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("Making donut...")
-	_, _ = w.Write([]byte("Delicious Jelly donut"))
+	_, _ = w.Write([]byte("Even more Delicious Jelly donut"))
 }
 
 func main() {
