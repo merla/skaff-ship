@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ship-service
+  name: ship-service-{{ .Values.env_codename}}
   labels:
-    app: ship-service
+    app: ship-service-{{ .Values.env_codename}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ship-service
+      app: ship-service-{{ .Values.env_codename}}
   template:
     metadata:
       labels:
-        app: ship-service
+        app: ship-service-{{ .Values.env_codename}}
     spec:
       containers:
-      - name: ship-service
+      - name: ship-service-{{ .Values.env_codename}}
         image: {{ if .Values.imageProd }}{{ .Values.imageProd }}{{ else }}{{ .Values.image }}{{ end }}
         ports:
         - containerPort: 8442
