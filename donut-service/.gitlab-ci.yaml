@@ -19,10 +19,11 @@ build-and-push-donut:
     - docker login -u _json_key -p "$(cat ${HOME}/gcloud-service-key.json)" https://gcr.io
   script:
     - cd donut-service
-    - docker build . -t gcr.io/kube-gke-terra/donut-service:${APP_VERSION}
-    - docker push gcr.io/kube-gke-terra/donut-service:${APP_VERSION}
+    - docker build . -t gcr.io/kube-gke-terra/donut-service:${APP_VERSION}-${CI_COMMIT_SHORT_SHA}
+    - docker push gcr.io/kube-gke-terra/donut-service:${APP_VERSION}-${CI_COMMIT_SHORT_SHA}
   only:
     changes:
+      - donut-service/**/*
       - helm/charts/donut-service/**/*
 
 deploy-donut:
@@ -36,7 +37,7 @@ deploy-donut:
     - gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${GCP_PROJECT_ID}
   script:
     - helm upgrade donut-service-prod --install ./helm/charts/donut-service 
-      --set imageProd=gcr.io/kube-gke-terra/donut-service:${APP_VERSION} 
+      --set imageProd=gcr.io/kube-gke-terra/donut-service:${APP_VERSION}-${CI_COMMIT_SHORT_SHA}
       --set env_codename=prod
   only:
     changes:
