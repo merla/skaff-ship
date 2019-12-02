@@ -1,6 +1,6 @@
 ---
 
-.test-go:
+.test-go: &test-go
   stage: test
   image: golang:1.13-alpine3.10
   script:
@@ -10,7 +10,7 @@
     changes:
       - $SERVICE_NAME/**/*
 
-.build-and-push:
+.build-and-push: &build-and-push
   stage: build
   image: docker:latest
   services:
@@ -28,7 +28,7 @@
       - $SERVICE_NAME/**/*
       - helm/charts/$SERVICE_NAME/**/*
 
-.deploy:
+.deploy: &deploy
   stage: deploy
   image: punkupoz/cloud-utils:v1.2.0
   before_script:
