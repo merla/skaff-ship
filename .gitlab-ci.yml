@@ -1,5 +1,26 @@
 ---
+image: ubuntu
 
+stages:
+  - test
+  - build
+  - deploy
+
+test donut:
+  variables:
+    SERVICE_NAME: donut-service
+  extends: .test-go
+
+build-and-push donut:
+  variables:
+    SERVICE_NAME: donut-service
+  extends: .build-and-push
+
+deploy donut:
+  variables:
+    SERVICE_NAME: donut-service
+  extends: .deploy
+  
 .test-go:
   stage: test
   image: golang:1.13-alpine3.10
@@ -44,23 +65,3 @@
   only:
     changes:
       - helm/charts/$SERVICE_NAME/**/*
-
-stages:
-  - test
-  - build
-  - deploy
-
-test donut:
-  variables:
-    SERVICE_NAME: donut-service
-  extends: .test-go
-
-build-and-push donut:
-  variables:
-    SERVICE_NAME: donut-service
-  extends: .build-and-push
-
-deploy donut:
-  variables:
-    SERVICE_NAME: donut-service
-  extends: .deploy
