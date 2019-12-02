@@ -45,37 +45,49 @@
     changes:
       - helm/charts/$SERVICE_NAME/**/*
 
+.donut-service: &donut-service
+  variables:
+    SERVICE_NAME: donut-service
+
+.ship-service: &ship-service
+  variables:
+    SERVICE_NAME: ship-service
+
+image: ubuntu
+
 stages:
   - test
   - build
   - deploy
 
 test donut:
-  variables:
-    SERVICE_NAME: donut-service
+  <<: *donut-service
   <<: *test-go
 
 build-and-push donut:
-  variables:
-    SERVICE_NAME: donut-service
+  <<: *donut-service
   <<: *build-and-push
+  needs:
+  - test donut
 
 deploy donut:
-  variables:
-    SERVICE_NAME: donut-service
+  <<: *donut-service
   <<: *deploy
+  needs:
+  - build-and-push donut
 
 test ship:
-  variables:
-    SERVICE_NAME: ship-service
+  <<: *ship-service
   <<: *test-go
 
 build-and-push ship:
-  variables:
-    SERVICE_NAME: ship-service
+  <<: *ship-service
   <<: *build-and-push
+  needs:
+  - test ship
 
 deploy ship:
-  variables:
-    SERVICE_NAME: ship-service
+  <<: *ship-service
   <<: *deploy
+  needs:
+  - build-and-push ship
