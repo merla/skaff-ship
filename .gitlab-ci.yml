@@ -64,7 +64,7 @@ deploy ship-service:
       - $SERVICE_NAME/**/*
       - helm/charts/$SERVICE_NAME/**/*
   needs:
-    - test $SERVICE_NAME
+    - test-go $SERVICE_NAME
 
 .deploy:
   stage: deploy
